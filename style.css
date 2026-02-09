@@ -1,6 +1,6 @@
 /* =========================
-   KIT CONTRATOS IMOBILIÁRIOS - CSS COMPLETO
-   Todas as correções aplicadas
+   KIT CONTRATOS IMOBILIÁRIOS - CSS CORRIGIDO
+   Layout: Mobile = Vertical | Desktop = Horizontal (Lado a Lado)
    ========================= */
 
 /* =========================
@@ -130,6 +130,22 @@ body {
   }
 }
 
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
 /* =========================
    UTILITY CLASSES
    ========================= */
@@ -145,20 +161,8 @@ body {
   font-weight: 600;
 }
 
-.glass-card {
-  background: rgba(17, 17, 17, 0.9);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.glass-card > * {
-  width: 100%;
+.text-white {
+  color: #ffffff;
 }
 
 /* =========================
@@ -179,6 +183,7 @@ body {
   border: none;
   cursor: pointer;
   font-size: 16px;
+  width: 100%;
 }
 
 .btn-large {
@@ -238,20 +243,23 @@ body {
 }
 
 /* =========================
-   HERO SECTION
+   HERO SECTION - MOBILE FIRST (VERTICAL)
    ========================= */
 .hero {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: auto;
   background: #000000;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .hero-bg {
   position: absolute;
   inset: 0;
   background: linear-gradient(135deg, #000000 0%, #000000 70%, rgba(30, 58, 138, 0.2) 100%);
+  z-index: 0;
 }
 
 .grid-pattern {
@@ -262,28 +270,34 @@ body {
     linear-gradient(rgba(59, 130, 246, 0.5) 1px, transparent 1px),
     linear-gradient(90deg, rgba(59, 130, 246, 0.5) 1px, transparent 1px);
   background-size: 50px 50px;
+  z-index: 1;
 }
 
-/* Hero Image Mobile */
+/* Mobile Image - VISÍVEL apenas no mobile */
 .hero-image-mobile {
-  display: none;
+  display: block;
   position: relative;
-  width: 100%;
-  height: 65vh;
-  min-height: 450px;
-  max-height: 700px;
+  width: 100vw;
+  height: auto;
+  min-height: 400px;
+  max-height: 70vh;
   overflow: hidden;
   background: #000000;
   margin: 0;
   padding: 0;
+  order: 1;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .hero-image-mobile img {
-  position: absolute;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: auto;
+  min-height: 400px;
+  max-height: 70vh;
   object-fit: cover;
   object-position: top center;
   display: block;
@@ -292,61 +306,50 @@ body {
   border: none;
 }
 
+/* Gradiente suave */
 .hero-gradient-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 120px;
-  background: linear-gradient(to top, #000000 0%, #000000 20%, transparent 100%);
+  height: 80px;
+  background: linear-gradient(to top, #000000 0%, rgba(0,0,0,0.9) 50%, transparent 100%);
   z-index: 1;
   pointer-events: none;
 }
 
-/* Hero Container */
+/* Desktop Image - OCULTO no mobile */
+.hero-image-desktop {
+  display: none;
+}
+
+/* Hero Container - MOBILE */
 .hero-container {
   position: relative;
   z-index: 10;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  padding: 0 24px;
-}
-
-/* Hero Image Desktop */
-.hero-image-desktop {
-  display: block;
-  width: 50%;
-  height: 80vh;
-  position: relative;
-}
-
-.hero-image-desktop img {
+  justify-content: flex-start;
+  min-height: auto;
+  padding: 0;
+  order: 2;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-  border-radius: 16px;
-  display: block;
 }
 
-.hero-glow {
-  position: absolute;
-  inset: -16px;
-  background: rgba(59, 130, 246, 0.2);
-  filter: blur(40px);
-  z-index: -1;
-  border-radius: 50%;
-}
-
-/* Hero Content */
+/* Hero Content - MOBILE */
 .hero-content {
-  width: 50%;
+  width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding-left: 64px;
+  align-items: center;
+  text-align: center;
+  padding: 20px 20px 48px;
+  background: #000000;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
 }
 
 /* Badge */
@@ -377,11 +380,11 @@ body {
 
 /* Hero Title */
 .hero-title {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-size: clamp(2rem, 8vw, 3.5rem);
   font-weight: 900;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   line-height: 1.1;
-  white-space: nowrap;
+  white-space: normal;
 }
 
 .title-white {
@@ -397,10 +400,10 @@ body {
 
 /* Hero Subtitle */
 .hero-subtitle {
-  font-size: clamp(1rem, 1.5vw, 1.25rem);
+  font-size: 1.125rem;
   color: #d1d5db;
-  margin-bottom: 32px;
-  max-width: 500px;
+  margin-bottom: 24px;
+  max-width: 100%;
   line-height: 1.7;
 }
 
@@ -408,8 +411,9 @@ body {
 .hero-features {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 16px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .feature-item {
@@ -429,12 +433,16 @@ body {
 /* Hero CTA */
 .hero-cta {
   margin-bottom: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 /* Hero Guarantee */
 .hero-guarantee {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   font-size: 14px;
   color: #6b7280;
@@ -446,43 +454,13 @@ body {
   color: #22c55e;
 }
 
-/* Scroll Indicator */
+/* Scroll Indicator - Oculto */
 .scroll-indicator {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-}
-
-.scroll-text {
-  font-size: 12px;
-  color: #6b7280;
-}
-
-.scroll-mouse {
-  width: 24px;
-  height: 40px;
-  border: 2px solid #4b5563;
-  border-radius: 12px;
-  display: flex;
-  justify-content: center;
-  padding-top: 8px;
-}
-
-.scroll-wheel {
-  width: 6px;
-  height: 6px;
-  background: #60a5fa;
-  border-radius: 50%;
-  animation: scroll-wheel 1.5s infinite;
+  display: none;
 }
 
 /* =========================
-   SECTIONS - COMMON
+   SECTIONS - MOBILE
    ========================= */
 .section {
   position: relative;
@@ -490,33 +468,65 @@ body {
   background: #000000;
   padding: 0;
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 5;
 }
 
 .section-image-wrapper {
   width: 100%;
-  height: 80vh;
+  height: auto;
+  min-height: 300px;
+  max-height: 60vh;
   overflow: hidden;
   position: relative;
   background: #000000;
+  order: 1;
 }
 
 .section-image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
+  min-height: 300px;
+  max-height: 60vh;
+  object-fit: contain;
   object-position: center;
   display: block;
 }
 
 .section-content-wrapper {
   position: relative;
-  padding: 0 24px;
-  margin-top: -128px;
+  padding: 0 20px;
+  margin-top: -60px;
   z-index: 10;
+  order: 2;
+  width: 100%;
+}
+
+.glass-card {
+  background: rgba(17, 17, 17, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 15;
+  box-shadow: 0 -20px 60px rgba(0,0,0,0.9);
+}
+
+.glass-card > * {
+  width: 100%;
 }
 
 .section-title {
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
   font-weight: 700;
   margin-bottom: 24px;
   line-height: 1.3;
@@ -529,15 +539,16 @@ body {
   color: #d1d5db;
   margin-bottom: 24px;
   line-height: 1.7;
+  text-align: center;
 }
 
 /* =========================
-   TWO COLUMNS - CORRIGIDO
+   TWO COLUMNS - MOBILE: LADO A LADO (IGUAL SEÇÃO "O QUE É")
    ========================= */
 .two-columns {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr !important;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
   margin-bottom: 32px;
   width: 100%;
 }
@@ -546,27 +557,18 @@ body {
   width: 100%;
 }
 
-.two-columns .column:first-child {
-  order: 1;
-}
-
-.two-columns .column:last-child {
-  order: 2;
-}
-
 .column-title {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.95rem;
+  gap: 6px;
+  font-size: 0.9rem;
   font-weight: 600;
-  margin-bottom: 16px;
-  white-space: nowrap;
+  margin-bottom: 12px;
 }
 
 .column-title svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   flex-shrink: 0;
 }
 
@@ -590,17 +592,17 @@ body {
 .feature-list-item {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
+  gap: 8px;
   color: #d1d5db;
-  font-size: 14px;
+  font-size: 13px;
   line-height: 1.4;
   margin: 0;
   padding: 0;
 }
 
 .bullet {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   flex-shrink: 0;
   margin-top: 6px;
@@ -729,7 +731,7 @@ body {
 }
 
 /* =========================
-   STATS - CORRIGIDO
+   STATS - GRID COMPACTO
    ========================= */
 .stats-grid {
   display: grid;
@@ -758,7 +760,7 @@ body {
 }
 
 .stat-label {
-  font-size: clamp(10px, 3vw, 12px);
+  font-size: 11px;
   color: #9ca3af;
   margin-top: 8px;
   line-height: 1.3;
@@ -838,19 +840,19 @@ body {
   color: #ffffff;
 }
 
-/* =====================================================
-   ETIQUETA 37% OFF - CENTRALIZADA CORRETAMENTE
-   ===================================================== */
-
+/* =========================
+   PRICE BOX
+   ========================= */
 .price-box {
   position: relative;
-  padding: 50px 20px 35px;
+  padding: 50px 24px 35px;
   background: linear-gradient(135deg, rgba(251, 191, 36, 0.2) 0%, rgba(245, 158, 11, 0.1) 50%, rgba(251, 191, 36, 0.2) 100%);
   border: 2px solid rgba(251, 191, 36, 0.5);
   border-radius: 24px;
   margin-bottom: 32px;
   overflow: visible;
   margin-top: 25px;
+  width: 100%;
 }
 
 .discount-badge {
@@ -932,7 +934,7 @@ body {
 }
 
 .price-currency {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
   color: #fbbf24;
 }
@@ -948,14 +950,14 @@ body {
 }
 
 .price-cents {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 700;
   color: #fbbf24;
 }
 
 .installment {
   color: #9ca3af;
-  font-size: 13px;
+  font-size: 14px;
   margin-bottom: 16px;
 }
 
@@ -974,74 +976,6 @@ body {
   color: #22c55e;
   font-weight: 600;
   font-size: 14px;
-}
-
-/* =====================================================
-   DEPOIMENTO/CHAT - ESPAÇAMENTO CORRIGIDO
-   ===================================================== */
-
-/* Container do depoimento - margem superior e inferior */
-.testimonial,
-.depoimento,
-.chat-container,
-.message-container,
-.testimonial-card,
-.review-card,
-.whatsapp-chat,
-.telegram-chat {
-  margin: 48px 0;
-}
-
-/* Espaçamento entre o botão/elemento de cima e o depoimento */
-.btn + .testimonial,
-.btn + .depoimento,
-.btn + .chat-container,
-.section-title + .testimonial,
-.section-title + .depoimento,
-h2 + .testimonial,
-h3 + .testimonial,
-.includes-list + .testimonial,
-.features-grid + .testimonial,
-.section-text + .testimonial {
-  margin-top: 48px;
-}
-
-/* Espaçamento entre o depoimento e o elemento de baixo */
-.testimonial + .section-title,
-.testimonial + h2,
-.testimonial + h3,
-.testimonial + .features-grid,
-.testimonial + .includes-list,
-.testimonial + .btn,
-.testimonial + .section-text,
-.depoimento + .section-title,
-.chat-container + .section-title {
-  margin-top: 48px;
-}
-
-/* Ajuste específico se o depoimento estiver dentro do glass-card */
-.glass-card .testimonial,
-.glass-card .depoimento,
-.glass-card .chat-container {
-  margin: 40px 0;
-}
-
-/* Se o depoimento tiver classe específica de mensagem */
-.message-bubble,
-.chat-bubble,
-.testimonial-message {
-  margin: 16px 0;
-}
-
-/* Container do depoimento com background (tipo chat) */
-.chat-wrapper,
-.testimonial-wrapper,
-.depoimento-wrapper {
-  margin: 48px 0;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* =========================
@@ -1153,20 +1087,14 @@ h3 + .testimonial,
   transform: translateY(0);
 }
 
-[data-animate="fade-left"] {
-  transform: translateX(50px);
-}
-
-[data-animate="fade-left"].animate-visible {
-  transform: translateX(0);
-}
-
+[data-animate="fade-left"],
 [data-animate="fade-right"] {
-  transform: translateX(-50px);
+  transform: translateY(30px);
 }
 
+[data-animate="fade-left"].animate-visible,
 [data-animate="fade-right"].animate-visible {
-  transform: translateX(0);
+  transform: translateY(0);
 }
 
 [data-animate="scale-in"] {
@@ -1177,228 +1105,275 @@ h3 + .testimonial,
   transform: scale(1);
 }
 
-/* =====================================================
-   CORREÇÕES MOBILE
-   ===================================================== */
-
-@media (max-width: 1024px) {
+/* =========================
+   MEDIA QUERIES - TABLET (641px - 1024px)
+   ========================= */
+@media (min-width: 641px) {
   .hero-image-mobile {
-    display: block;
-    width: 100%;
-    height: 65vh;
-    min-height: 450px;
-    max-height: 700px;
-    background: #000000;
-    position: relative;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+    min-height: 500px;
+    max-height: 80vh;
   }
 
   .hero-image-mobile img {
+    min-height: 500px;
+    max-height: 80vh;
+  }
+
+  .hero-content {
+    padding: 24px 32px 64px;
+    max-width: 700px;
+  }
+
+  .section-image-wrapper {
+    min-height: 400px;
+    max-height: 70vh;
+  }
+
+  .section-image {
+    min-height: 400px;
+    max-height: 70vh;
+  }
+
+  .section-content-wrapper {
+    padding: 0 32px;
+    margin-top: -80px;
+  }
+
+  .glass-card {
+    padding: 40px;
+    max-width: 700px;
+  }
+
+  .features-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  /* Tablet: aumenta um pouco as fontes das colunas */
+  .two-columns {
+    gap: 24px;
+  }
+  
+  .column-title {
+    font-size: 1rem;
+    gap: 8px;
+  }
+  
+  .column-title svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .feature-list-item {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+}
+
+/* =========================
+   MEDIA QUERIES - DESKTOP (>1024px) - LAYOUT HORIZONTAL
+   ========================= */
+@media (min-width: 1025px) {
+  /* HERO - LAYOUT HORIZONTAL */
+  .hero {
+    min-height: 100vh;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  /* Esconde imagem mobile no desktop */
+  .hero-image-mobile {
+    display: none !important;
+  }
+
+  /* Mostra imagem desktop */
+  .hero-image-desktop {
+    display: block !important;
     position: absolute;
-    top: 0;
     left: 0;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    z-index: 2;
+    order: unset;
+  }
+
+  .hero-image-desktop img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top center;
-    display: block;
-    margin: 0;
-    padding: 0;
-    border: none;
+    object-position: center top;
   }
 
-  .hero-gradient-overlay {
+  .hero-glow {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 120px;
-    background: linear-gradient(to top, #000000 0%, #000000 20%, transparent 100%);
-    z-index: 1;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.2) 0%, transparent 70%);
     pointer-events: none;
   }
 
+  /* Container do hero - lado direito */
   .hero-container {
-    flex-direction: column;
-    min-height: auto;
-    padding: 0;
-  }
-
-  .hero-image-desktop {
-    display: none;
-  }
-
-  .hero-content {
-    width: 100%;
-    padding: 32px 20px 48px;
+    flex-direction: row;
+    justify-content: flex-end;
     align-items: center;
-    text-align: center;
-    background: #000000;
+    min-height: 100vh;
+    padding: 0 5%;
+    order: unset;
+  }
+
+  /* Conteúdo do hero - alinhado à direita */
+  .hero-content {
+    width: 45%;
+    max-width: 600px;
+    align-items: flex-start;
+    text-align: left;
+    padding: 40px;
+    margin: 0;
+    margin-left: auto;
   }
 
   .hero-title {
-    white-space: normal;
-    font-size: clamp(2rem, 8vw, 3rem);
-    margin-bottom: 16px;
+    font-size: clamp(2.5rem, 4vw, 4rem);
   }
 
   .hero-subtitle {
-    max-width: 100%;
-    font-size: 1rem;
-    margin-bottom: 24px;
+    font-size: 1.25rem;
   }
 
   .hero-features {
-    justify-content: center;
-    margin-bottom: 24px;
+    justify-content: flex-start;
   }
 
-  .scroll-indicator {
-    display: none;
+  .hero-cta {
+    justify-content: flex-start;
   }
 
-  .glass-card .btn,
-  .section-content-wrapper .btn,
-  .hero-content .btn {
-    display: flex;
-    margin-left: auto;
-    margin-right: auto;
-    width: fit-content;
-    min-width: 280px;
-    justify-content: center;
+  .hero-guarantee {
+    justify-content: flex-start;
+  }
+
+  /* SECTIONS - LAYOUT HORIZONTAL (alternando lados) */
+  .section {
+    flex-direction: row;
+    align-items: center;
+    min-height: 100vh;
+    padding: 60px 5%;
   }
 
   .section-image-wrapper {
-    height: 60vh;
-    min-height: 350px;
-    max-height: 500px;
-    background: #000000;
+    width: 50%;
+    height: 100%;
+    min-height: unset;
+    max-height: unset;
+    order: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .section-image {
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    min-height: unset;
+    object-fit: contain;
   }
 
   .section-content-wrapper {
-    margin-top: -80px;
-    padding: 0 20px;
+    width: 50%;
+    padding: 0 40px;
+    margin-top: 0;
+    order: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .glass-card {
-    padding: 24px 20px;
+    max-width: 600px;
+    padding: 48px;
+    margin: 0;
   }
 
+  /* Alterna lado da imagem em seções ímpares */
+  .section:nth-child(odd) .section-image-wrapper {
+    order: 2;
+  }
+
+  .section:nth-child(odd) .section-content-wrapper {
+    order: 1;
+  }
+
+  /* Two columns - desktop com gaps maiores */
   .two-columns {
-    gap: 24px;
+    gap: 40px;
+  }
+  
+  .column-title {
+    font-size: 1.125rem;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .column-title svg {
+    width: 22px;
+    height: 22px;
+  }
+  
+  .feature-list {
+    gap: 12px;
+  }
+  
+  .feature-list-item {
+    font-size: 16px;
+    line-height: 1.6;
+    gap: 10px;
+  }
+  
+  .bullet {
+    width: 6px;
+    height: 6px;
+    margin-top: 8px;
+  }
+
+  /* Animações específicas desktop */
+  [data-animate="fade-left"] {
+    transform: translateX(-50px);
+  }
+
+  [data-animate="fade-right"] {
+    transform: translateX(50px);
+  }
+
+  [data-animate="fade-left"].animate-visible,
+  [data-animate="fade-right"].animate-visible {
+    transform: translateX(0);
   }
 }
 
-@media (max-width: 640px) {
-  .hero-image-mobile {
-    height: 60vh;
-    min-height: 400px;
-    max-height: 600px;
+/* =========================
+   MEDIA QUERIES - LARGE DESKTOP (>1400px)
+   ========================= */
+@media (min-width: 1400px) {
+  .hero-container {
+    padding: 0 10%;
   }
 
   .hero-content {
-    padding: 24px 16px 40px;
+    max-width: 700px;
   }
 
-  .glass-card .btn,
-  .section-content-wrapper .btn,
-  .hero-content .btn {
-    min-width: 100%;
-    width: 100%;
-  }
-
-  .stats-grid {
-    gap: 8px;
-  }
-
-  .stat-item {
-    padding: 12px 6px;
-  }
-
-  .stat-number {
-    font-size: clamp(1.25rem, 4.5vw, 1.75rem);
-  }
-
-  .stat-label {
-    font-size: 10px;
-  }
-
-  .two-columns {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-
-  .section-image-wrapper {
-    height: 50vh;
-    min-height: 300px;
-  }
-
-  .section-content-wrapper {
-    margin-top: -60px;
-    padding: 0 16px;
+  .section {
+    padding: 80px 10%;
   }
 
   .glass-card {
-    padding: 20px 16px;
-  }
-
-  /* Ajustes da etiqueta no mobile */
-  .price-box {
-    padding: 45px 16px 28px;
-    margin-top: 22px;
-  }
-
-  .discount-badge {
-    font-size: 11px;
-    padding: 8px 16px;
-    top: -18px;
-    border-width: 2px;
-  }
-
-  .discount-badge::before {
-    font-size: 12px;
-  }
-
-  .price-amount {
-    font-size: 48px;
-  }
-
-  .savings {
-    font-size: 12px;
-    padding: 8px 12px;
-  }
-
-  /* Ajustes do depoimento no mobile */
-  .testimonial,
-  .depoimento,
-  .chat-container,
-  .whatsapp-chat,
-  .telegram-chat {
-    margin: 32px 0;
+    max-width: 700px;
+    padding: 60px;
   }
   
-  .btn + .testimonial,
-  .section-title + .testimonial,
-  .testimonial + .section-title,
-  .testimonial + h2 {
-    margin-top: 32px;
-  }
-  
-  .chat-wrapper,
-  .testimonial-wrapper {
-    margin: 32px 0;
-    padding: 16px;
+  .two-columns {
+    gap: 48px;
   }
 }
-
-.hero,
-.section,
-.hero-image-mobile,
-.section-image-wrapper {
-  margin: 0;
-  padding: 0;
-  background: #000000;
-}
-
