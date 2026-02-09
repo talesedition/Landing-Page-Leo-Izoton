@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const ctaButtons = document.querySelectorAll('.btn');
   
   ctaButtons.forEach(button => {
-    button.addEventListener('click', function() {
+    button.addEventListener('click', function(e) {
       // Add ripple effect
       const ripple = document.createElement('span');
       ripple.style.cssText = `
@@ -78,8 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const rect = this.getBoundingClientRect();
       const size = Math.max(rect.width, rect.height);
       ripple.style.width = ripple.style.height = size + 'px';
-      ripple.style.left = (event.clientX - rect.left - size / 2) + 'px';
-      ripple.style.top = (event.clientY - rect.top - size / 2) + 'px';
+      ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
+      ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
       
       this.appendChild(ripple);
       
@@ -164,36 +164,72 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   // =========================
-  // COUNTDOWN TIMER (optional)
+  // DEPOIMENTOS CARROSSEL
   // =========================
-  function startCountdown(endDate, elementId) {
-    const element = document.getElementById(elementId);
-    if (!element) return;
+  const carousel = document.getElementById('depoimentosCarousel');
+  const track = document.getElementById('depoimentosTrack');
+  const dots = document.querySelectorAll('.dot');
+  
+  if (carousel && track) {
+    let currentIndex = 0;
+    const totalSlides = 6;
+    let intervalId;
+    let isPaused = false;
     
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const distance = endDate - now;
+    // Função para ir para um slide específico
+    function goToSlide(index) {
+      currentIndex = index;
+      const translateX = -(currentIndex * (100 / totalSlides));
+      track.style.transform = `translateX(${translateX}%)`;
       
-      if (distance < 0) {
-        element.innerHTML = 'Oferta encerrada';
-        return;
-      }
-      
-      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      
-      element.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+      // Atualiza os dots
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+      });
     }
     
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+    // Função para próximo slide
+    function nextSlide() {
+      const nextIndex = (currentIndex + 1) % totalSlides;
+      goToSlide(nextIndex);
+    }
+    
+    // Inicia o carrossel automático
+    function startAutoplay() {
+      intervalId = setInterval(nextSlide, 4000); // Muda a cada 4 segundos
+    }
+    
+    // Para o carrossel
+    function stopAutoplay() {
+      clearInterval(intervalId);
+    }
+    
+    // Event listeners para pausar no hover
+    carousel.addEventListener('mouseenter', () => {
+      isPaused = true;
+      stopAutoplay();
+    });
+    
+    carousel.addEventListener('mouseleave', () => {
+      isPaused = false;
+      startAutoplay();
+    });
+    
+    // Event listeners para os dots
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+        // Reseta o intervalo quando clicado manualmente
+        if (!isPaused) {
+          stopAutoplay();
+          startAutoplay();
+        }
+      });
+    });
+    
+    // Inicia automaticamente
+    startAutoplay();
   }
-  
-  // Example: Start countdown for 7 days from now
-  // const endDate = new Date().getTime() + (7 * 24 * 60 * 60 * 1000);
-  // startCountdown(endDate, 'countdown');
   
   // =========================
   // ANALYTICS TRACKING
@@ -274,4 +310,3 @@ style.textContent = `
   }
 `;
 document.head.appendChild(style);
-

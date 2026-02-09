@@ -146,6 +146,17 @@ body {
   }
 }
 
+@keyframes fadeInSlide {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 /* =========================
    UTILITY CLASSES
    ========================= */
@@ -767,6 +778,83 @@ body {
 }
 
 /* =========================
+   DEPOIMENTOS CARROSSEL
+   ========================= */
+.section-depoimentos {
+  min-height: auto;
+  padding: 60px 0;
+}
+
+.section-depoimentos .section-content-wrapper {
+  margin-top: 0;
+  padding: 0 20px;
+}
+
+.section-depoimentos .glass-card {
+  padding: 40px 24px;
+}
+
+.depoimentos-carousel {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 24px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.depoimentos-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 600%;
+}
+
+.depoimento-slide {
+  width: 16.666%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.depoimento-slide img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  border-radius: 12px;
+  display: block;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.dot.active {
+  background: #3b82f6;
+  transform: scale(1.2);
+}
+
+.dot:hover {
+  background: #60a5fa;
+}
+
+/* =========================
    INCLUDES LIST
    ========================= */
 .includes-list {
@@ -1168,6 +1256,11 @@ body {
     font-size: 14px;
     line-height: 1.5;
   }
+
+  /* Depoimentos tablet */
+  .depoimentos-carousel {
+    max-width: 450px;
+  }
 }
 
 /* =========================
@@ -1337,6 +1430,21 @@ body {
     margin-top: 8px;
   }
 
+  /* Depoimentos desktop */
+  .section-depoimentos {
+    padding: 80px 5%;
+  }
+
+  .section-depoimentos .section-content-wrapper {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .depoimentos-carousel {
+    max-width: 500px;
+  }
+
   /* Animações específicas desktop */
   [data-animate="fade-left"] {
     transform: translateX(-50px);
@@ -1375,5 +1483,9 @@ body {
   
   .two-columns {
     gap: 48px;
+  }
+
+  .depoimentos-carousel {
+    max-width: 550px;
   }
 }
