@@ -8,30 +8,30 @@ document.addEventListener('DOMContentLoaded', function() {
   // SCROLL ANIMATIONS
   // =========================
   const animatedElements = document.querySelectorAll('[data-animate]');
-  
+
   const observerOptions = {
     root: null,
     rootMargin: '0px 0px -50px 0px',
     threshold: 0.1
   };
-  
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const delay = entry.target.dataset.delay || 0;
-        
+
         setTimeout(() => {
           entry.target.classList.add('animate-visible');
         }, delay);
-        
+
         // Unobserve after animation
         observer.unobserve(entry.target);
       }
     });
   }, observerOptions);
-  
+
   animatedElements.forEach(el => observer.observe(el));
-  
+
   // =========================
   // SMOOTH SCROLL FOR ANCHOR LINKS
   // =========================
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     anchor.addEventListener('click', function(e) {
       e.preventDefault();
       const target = document.querySelector(this.getAttribute('href'));
-      
+
       if (target) {
         target.scrollIntoView({
           behavior: 'smooth',
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-  
+
   // =========================
   // DYNAMIC YEAR IN FOOTER
   // =========================
@@ -56,12 +56,12 @@ document.addEventListener('DOMContentLoaded', function() {
   if (yearElement) {
     yearElement.textContent = new Date().getFullYear();
   }
-  
+
   // =========================
   // BUTTON CLICK TRACKING
   // =========================
   const ctaButtons = document.querySelectorAll('.btn');
-  
+
   ctaButtons.forEach(button => {
     button.addEventListener('click', function(e) {
       // Add ripple effect
@@ -74,24 +74,24 @@ document.addEventListener('DOMContentLoaded', function() {
         animation: ripple 0.6s linear;
         pointer-events: none;
       `;
-      
+
       const rect = this.getBoundingClientRect();
       const size = Math.max(rect.width, rect.height);
       ripple.style.width = ripple.style.height = size + 'px';
       ripple.style.left = (e.clientX - rect.left - size / 2) + 'px';
       ripple.style.top = (e.clientY - rect.top - size / 2) + 'px';
-      
+
       this.appendChild(ripple);
-      
+
       setTimeout(() => ripple.remove(), 600);
     });
   });
-  
+
   // =========================
   // PARALLAX EFFECT FOR HERO
   // =========================
   const heroImage = document.querySelector('.hero-image-desktop img');
-  
+
   if (heroImage && window.innerWidth > 1024) {
     window.addEventListener('scroll', () => {
       const scrolled = window.pageYOffset;
@@ -99,15 +99,15 @@ document.addEventListener('DOMContentLoaded', function() {
       heroImage.style.transform = `translateY(${rate}px)`;
     }, { passive: true });
   }
-  
+
   // =========================
   // NAVBAR BACKGROUND ON SCROLL
   // =========================
   let lastScroll = 0;
-  
+
   window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
-    
+
     // Add shadow to sections when scrolling
     const sections = document.querySelectorAll('.section');
     sections.forEach(section => {
@@ -116,15 +116,15 @@ document.addEventListener('DOMContentLoaded', function() {
         section.style.opacity = '1';
       }
     });
-    
+
     lastScroll = currentScroll;
   }, { passive: true });
-  
+
   // =========================
   // LAZY LOAD IMAGES
   // =========================
   const images = document.querySelectorAll('img[data-src]');
-  
+
   const imageObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -135,19 +135,19 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }, { rootMargin: '50px' });
-  
+
   images.forEach(img => imageObserver.observe(img));
-  
+
   // =========================
   // FORM VALIDATION (if needed)
   // =========================
   const forms = document.querySelectorAll('form');
-  
+
   forms.forEach(form => {
     form.addEventListener('submit', function(e) {
       const requiredFields = form.querySelectorAll('[required]');
       let isValid = true;
-      
+
       requiredFields.forEach(field => {
         if (!field.value.trim()) {
           isValid = false;
@@ -156,65 +156,65 @@ document.addEventListener('DOMContentLoaded', function() {
           field.classList.remove('error');
         }
       });
-      
+
       if (!isValid) {
         e.preventDefault();
       }
     });
   });
-  
+
   // =========================
   // DEPOIMENTOS CARROSSEL
   // =========================
   const carousel = document.getElementById('depoimentosCarousel');
   const track = document.getElementById('depoimentosTrack');
   const dots = document.querySelectorAll('.dot');
-  
+
   if (carousel && track) {
     let currentIndex = 0;
     const totalSlides = 6;
     let intervalId;
     let isPaused = false;
-    
+
     // Função para ir para um slide específico
     function goToSlide(index) {
       currentIndex = index;
       const translateX = -(currentIndex * (100 / totalSlides));
       track.style.transform = `translateX(${translateX}%)`;
-      
+
       // Atualiza os dots
       dots.forEach((dot, i) => {
         dot.classList.toggle('active', i === currentIndex);
       });
     }
-    
+
     // Função para próximo slide
     function nextSlide() {
       const nextIndex = (currentIndex + 1) % totalSlides;
       goToSlide(nextIndex);
     }
-    
+
     // Inicia o carrossel automático
     function startAutoplay() {
       intervalId = setInterval(nextSlide, 4000); // Muda a cada 4 segundos
     }
-    
+
     // Para o carrossel
     function stopAutoplay() {
       clearInterval(intervalId);
     }
-    
+
     // Event listeners para pausar no hover
     carousel.addEventListener('mouseenter', () => {
       isPaused = true;
       stopAutoplay();
     });
-    
+
     carousel.addEventListener('mouseleave', () => {
       isPaused = false;
       startAutoplay();
     });
-    
+
     // Event listeners para os dots
     dots.forEach((dot, index) => {
       dot.addEventListener('click', () => {
@@ -226,18 +226,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
     });
-    
+
     // Inicia automaticamente
     startAutoplay();
   }
-  
+
   // =========================
   // ANALYTICS TRACKING
   // =========================
   // Track CTA clicks
   const ctaHero = document.getElementById('cta-hero');
   const ctaFinal = document.getElementById('cta-final');
-  
+
   if (ctaHero) {
     ctaHero.addEventListener('click', () => {
       if (typeof gtag !== 'undefined') {
@@ -246,13 +246,13 @@ document.addEventListener('DOMContentLoaded', function() {
           event_label: 'Hero Button'
         });
       }
-      
+
       if (typeof fbq !== 'undefined') {
         fbq('track', 'InitiateCheckout');
       }
     });
   }
-  
+
   if (ctaFinal) {
     ctaFinal.addEventListener('click', () => {
       if (typeof gtag !== 'undefined') {
@@ -261,13 +261,13 @@ document.addEventListener('DOMContentLoaded', function() {
           event_label: 'Final Button'
         });
       }
-      
+
       if (typeof fbq !== 'undefined') {
         fbq('track', 'Purchase', { value: 187, currency: 'BRL' });
       }
     });
   }
-  
+
   // =========================
   // PERFORMANCE OPTIMIZATION
   // =========================
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
     'img/leo-hero-desktop.png',
     'img/leo-hero-mobile.png'
   ];
-  
+
   preloadLinks.forEach(href => {
     const link = document.createElement('link');
     link.rel = 'preload';
@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', function() {
     link.href = href;
     document.head.appendChild(link);
   });
-  
+
   console.log('🚀 Landing Page Loaded Successfully!');
 });
 
@@ -299,7 +299,7 @@ style.textContent = `
       opacity: 0;
     }
   }
-  
+
   @keyframes pulse {
     0%, 100% {
       opacity: 1;

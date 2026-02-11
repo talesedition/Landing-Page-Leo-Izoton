@@ -505,15 +505,17 @@ body {
   display: block;
 }
 
+/* CORREÇÃO: Removido margin-top negativo que fazia o card subir sobre a imagem */
 .section-content-wrapper {
   position: relative;
-  padding: 0 20px;
-  margin-top: -60px;
+  padding: 40px 20px 60px;
   z-index: 10;
   order: 2;
   width: 100%;
+  background: #000000;
 }
 
+/* CORREÇÃO: Ajustado glass-card para não ter margem negativa */
 .glass-card {
   background: rgba(17, 17, 17, 0.98);
   backdrop-filter: blur(20px);
@@ -529,7 +531,7 @@ body {
   margin: 0 auto;
   position: relative;
   z-index: 15;
-  box-shadow: 0 -20px 60px rgba(0,0,0,0.9);
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
 }
 
 .glass-card > * {
@@ -785,9 +787,10 @@ body {
   padding: 60px 0;
 }
 
+/* CORREÇÃO: Ajustado para não ter margem negativa */
 .section-depoimentos .section-content-wrapper {
   margin-top: 0;
-  padding: 0 20px;
+  padding: 40px 20px;
 }
 
 .section-depoimentos .glass-card {
@@ -1097,7 +1100,7 @@ body {
   background: #000000;
   padding: 48px 24px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 64px;
+  margin-top: 0;
 }
 
 .footer-content {
@@ -1222,9 +1225,9 @@ body {
     max-height: 70vh;
   }
 
+  /* CORREÇÃO: Ajustado padding para tablet */
   .section-content-wrapper {
-    padding: 0 32px;
-    margin-top: -80px;
+    padding: 50px 32px 80px;
   }
 
   .glass-card {
@@ -1236,22 +1239,22 @@ body {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
   }
-  
+
   /* Tablet: aumenta um pouco as fontes das colunas */
   .two-columns {
     gap: 24px;
   }
-  
+
   .column-title {
     font-size: 1rem;
     gap: 8px;
   }
-  
+
   .column-title svg {
     width: 18px;
     height: 18px;
   }
-  
+
   .feature-list-item {
     font-size: 14px;
     line-height: 1.5;
@@ -1373,9 +1376,10 @@ body {
     object-fit: contain;
   }
 
+  /* CORREÇÃO: Ajustado para desktop sem margem negativa */
   .section-content-wrapper {
     width: 50%;
-    padding: 0 40px;
+    padding: 40px;
     margin-top: 0;
     order: unset;
     display: flex;
@@ -1402,28 +1406,28 @@ body {
   .two-columns {
     gap: 40px;
   }
-  
+
   .column-title {
     font-size: 1.125rem;
     gap: 10px;
     margin-bottom: 16px;
   }
-  
+
   .column-title svg {
     width: 22px;
     height: 22px;
   }
-  
+
   .feature-list {
     gap: 12px;
   }
-  
+
   .feature-list-item {
     font-size: 16px;
     line-height: 1.6;
     gap: 10px;
   }
-  
+
   .bullet {
     width: 6px;
     height: 6px;
@@ -1439,6 +1443,7 @@ body {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
+    padding: 40px;
   }
 
   .depoimentos-carousel {
@@ -1480,7 +1485,7 @@ body {
     max-width: 700px;
     padding: 60px;
   }
-  
+
   .two-columns {
     gap: 48px;
   }
