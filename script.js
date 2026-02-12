@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // =========================
-  // DEPOIMENTOS CARROSSEL
+  // DEPOIMENTOS CARROSSEL - ATUALIZADO PARA 4 SLIDES
   // =========================
   const carousel = document.getElementById('depoimentosCarousel');
   const track = document.getElementById('depoimentosTrack');
@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   if (carousel && track) {
     let currentIndex = 0;
-    const totalSlides = 6;
+    const totalSlides = 4; // Atualizado para 4 slides
     let intervalId;
     let isPaused = false;
 

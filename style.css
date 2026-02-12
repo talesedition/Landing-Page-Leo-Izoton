@@ -810,11 +810,11 @@ body {
 .depoimentos-track {
   display: flex;
   transition: transform 0.5s ease-in-out;
-  width: 600%;
+  width: 400%; /* 4 slides = 400% */
 }
 
 .depoimento-slide {
-  width: 16.666%;
+  width: 25%; /* 100% / 4 slides = 25% */
   flex-shrink: 0;
   display: flex;
   align-items: center;
@@ -884,6 +884,12 @@ body {
 .include-text {
   color: #d1d5db;
   flex: 1;
+  line-height: 1.5;
+}
+
+.include-text small {
+  display: block;
+  margin-top: 4px;
 }
 
 .include-check {
